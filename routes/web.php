@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//datatables
-Route::get('/datatables', function () {
-    return view('datatables');
-});
-
 Auth::routes();
 
 //Page admin
