@@ -12,7 +12,7 @@ class CategoryService
     public function store($request){
         $status = false;
         $input = $request->all();
-        if($request->hasFile('product_images')){
+        if($request->hasFile('category_image')){
             $file = $request->file('category_image');
             $fileName = $file->getClientOriginalName();
             $storedPath = $file->storeAs('images/categories',$fileName);

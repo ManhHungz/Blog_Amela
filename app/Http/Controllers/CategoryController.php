@@ -38,11 +38,9 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request){
         \DB::beginTransaction();
         try {
-            $status = $this->service->store($request);
-            if ($status == true){
-                \DB::commit();
-                return redirect()->route('categories.index')->with('flash_message','Created category successfully');
-            }
+            $this->service->store($request);
+            \DB::commit();
+            return redirect()->route('categories.index')->with('flash_message','Created category successfully');
         }catch (\Exception $e){
             \DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -70,11 +68,9 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, $id){
         \DB::beginTransaction();
         try {
-            $status = $this->service->update($request);
-            if ($status == true){
-                \DB::commit();
-                return redirect()->route('categories.index')->with('flash_message','Updated category successfully');
-            }
+            $this->service->update($request);
+            \DB::commit();
+            return redirect()->route('categories.index')->with('flash_message','Updated category successfully');
         }catch (\Exception $e){
             \DB::rollBack();
             throw new \Exception($e->getMessage());
