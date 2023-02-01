@@ -16,11 +16,10 @@ class Permission
      */
     public function handle($request, Closure $next)
     {
-        $a = User::find(1);
-        if (@$a->email == "daomanhhung3105@gmai.com"){
+        if(auth()->user()->role == self::ADMIN_ROLE){
             return $next($request);
         }
 
-        return redirect('login');
+        return redirect('/login');
     }
 }
