@@ -16,7 +16,7 @@ class Permission
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role == self::ADMIN_ROLE){
+        if(auth()->user()->roles['0']->name == 'Admin'){
             return $next($request);
         }
 
