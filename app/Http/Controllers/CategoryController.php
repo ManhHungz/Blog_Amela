@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Paginations;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
@@ -19,7 +20,7 @@ class CategoryController extends Controller
 
     public function index(){
         try {
-            $datas = Category::orderBy('id','DESC')->paginate(5);
+            $datas = Category::orderBy('id','DESC')->paginate(Paginations::SHOW_ITEMS);
             return view('categories.index',compact('datas'));
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());

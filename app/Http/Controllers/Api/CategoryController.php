@@ -25,7 +25,7 @@ class CategoryController extends Controller
 
     public function detailCategory($id){
         try {
-            $list_products = Category::find($id)->products;
+            $list_products = Pro::find($id)->products;
             return response()->json([
                 'status' => 'success',
                 'data' => $list_products,

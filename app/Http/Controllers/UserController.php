@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Paginations;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Services\CMS\UserService;
@@ -30,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $datas = User::orderBy('id','DESC')->paginate(5);
+            $datas = User::orderBy('id','DESC')->paginate(Paginations::SHOW_ITEMS);
             return view('users.index',compact('datas'));
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());

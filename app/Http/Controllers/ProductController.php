@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Paginations;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\CategoriesProducts;
@@ -22,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $datas = Product::orderBy('id', 'DESC')->paginate(5);
+            $datas = Product::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
             return view('products.index', compact('datas'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -98,7 +99,7 @@ class ProductController extends Controller
     {
         try {
             Product::find($id)->delete();
-            return redirect()->route('products.index')->with('message', 'Deleted successfully');
+            return redirect()->route('products.index')->with('flash_message', 'Deleted successfully');
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

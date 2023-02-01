@@ -30,6 +30,6 @@ Route::middleware('auth:api')->group(function () {
 
         Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
         Route::get('/products/{id}', [\App\Http\Controllers\Api\ProductController::class, 'detailProduct']);
-        Route::get('/products/{search}', [\App\Http\Controllers\Api\ProductController::class, 'search']);
+        Route::get('/products-search/{name}', [\App\Http\Controllers\Api\ProductController::class, 'search']);
     });
 });

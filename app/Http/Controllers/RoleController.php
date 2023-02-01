@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Constants\Paginations;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
@@ -31,7 +32,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = Role::orderBy('id','DESC')->paginate(5);
+        $datas = Role::orderBy('id','DESC')->paginate(Paginations::SHOW_ITEMS);
         return view('roles.index',compact('datas'));
     }
 
