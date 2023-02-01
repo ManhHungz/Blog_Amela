@@ -3,15 +3,17 @@
 
 namespace App\Services\CMS;
 
-
-
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
     public function store($request){
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+        $role = $input['role'];
+        unset($input['role']);
         $insert = User::create($input);
         if(!empty($insert)){
             $index['user_id'] = $insert->id;
@@ -26,11 +28,6 @@ class UserService
         $role = $input['role'];
         unset($input['role']);
         $user->fill($input)->save();
-        if(DB::table('roles_users')->where('user_id',$id)->update([
-            'role_id' => $role
-        ])){
-            return true;
-        }
-        return false;
+        $user->roles()->sync($role);
     }
 }

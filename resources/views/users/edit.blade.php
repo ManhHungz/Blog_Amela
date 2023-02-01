@@ -15,7 +15,7 @@
             </div>
         <form role="form" action="{{ route('users.update',$user->id) }}" method="post">
         @csrf
-        @method('put')
+        @method('patch')
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <label for="name">Name</label>

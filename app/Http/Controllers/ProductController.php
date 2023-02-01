@@ -69,11 +69,9 @@ class ProductController extends Controller
     {
         \DB::beginTransaction();
         try {
-            $status = $this->service->store($request);
-            if ($status == true) {
-                \DB::commit();
-                return redirect()->route('products.index')->with('flash_message', 'Product created successfully!');;
-            }
+           $this->service->store($request);
+            \DB::commit();
+            return redirect()->route('products.index')->with('flash_message', 'Product created successfully!');;
         } catch (\Exception $e) {
             \DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -84,11 +82,9 @@ class ProductController extends Controller
     {
         \DB::beginTransaction();
         try {
-            $status = $this->service->update($request, $id);
-            if ($status == true) {
-                \DB::commit();
-                return redirect()->route('products.index')->with('flash_message', 'Product updated successfully!');
-            }
+            $this->service->update($request, $id);
+            \DB::commit();
+            return redirect()->route('products.index')->with('flash_message', 'Product updated successfully!');
         } catch (\Exception $e) {
             \DB::rollBack();
             throw new \Exception($e->getMessage());
