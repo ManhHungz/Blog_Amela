@@ -3,9 +3,8 @@
 
 namespace App\Services\CMS;
 
-
-
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
