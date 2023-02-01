@@ -10,7 +10,6 @@ use App\Models\User;
 class UserService
 {
     public function store($request){
-        $status = false;
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $insert = User::create($input);
@@ -18,9 +17,7 @@ class UserService
             $index['user_id'] = $insert->id;
             $index['role_id'] = $input['role'];
             DB::table('roles_users')->insert($index);
-            $status=true;
         }
-        return $status;
     }
 
     public function update($request, $id){

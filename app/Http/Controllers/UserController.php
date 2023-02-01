@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         \DB::beginTransaction();
         try {
-            $status = $this->service->store($request);
+            $this->service->store($request);
             \DB::commit();
             return redirect()->route('categories.index')->with('flash_message','Create successfully');
         }catch (\Exception $e){
@@ -118,10 +118,9 @@ class UserController extends Controller
     {
         \DB::beginTransaction();
         try {
-            if($this->service->update($request, $id) == true){
-                \DB::commit();
-                return redirect()->route('users.index')->with('flash_message','User updated successfully');
-            }
+            $this->service->update($request, $id);
+            \DB::commit();
+            return redirect()->route('users.index')->with('flash_message','User updated successfully');
         }catch (\Exception $e){
             \DB::rollBack();
             throw new \Exception($e->getMessage());
