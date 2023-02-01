@@ -47,16 +47,7 @@
                 @endphp
                 @if(in_array('Admin', $roles))
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Widgets
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="users" class="nav-link">
+                    <a href="{{route('users.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Users
@@ -64,7 +55,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="roles" class="nav-link">
+                    <a href="{{route('roles.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Roles
@@ -72,7 +63,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="categories" class="nav-link">
+                    <a href="{{route('categories.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Categories
@@ -80,7 +71,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="products" class="nav-link">
+                    <a href="{{route('products.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Products
