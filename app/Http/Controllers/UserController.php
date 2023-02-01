@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Services\CMS\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
-//use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
@@ -17,6 +17,11 @@ use Session;
 
 class UserController extends Controller
 {
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +29,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $datas = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('datas'));
+        try {
+            $datas = User::orderBy('id','DESC')->paginate(5);
+            return view('users.index',compact('datas'));
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
@@ -35,8 +44,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name')->all();
-        return view('users.create',compact('roles'));
+        try {
+            $roles = Role::pluck('name')->all();
+            return view('users.create',compact('roles'));
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
@@ -47,15 +60,13 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        \DB::beginTransaction();
         try {
-            $insert = User::create($input);
-            $index['user_id'] = $insert->id;
-            $index['role_id'] = $input['role'];
-            DB::table('roles_users')->insert($index);
-            return redirect()->route('categories.index')->with('message','Create successfully');
+            $status = $this->service->store($request);
+            \DB::commit();
+            return redirect()->route('categories.index')->with('flash_message','Create successfully');
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
@@ -68,8 +79,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('users.show',compact('user'));
+        try {
+            $user = User::find($id);
+            return view('users.show',compact('user'));
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
@@ -80,12 +95,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $roles = Role::get();
-
-        $user_role = array_merge(...array_values(array_unique(array_column($user->roles->toArray(), 'pivot'))));
-        $user['role_id'] = $user_role['role_id'];
-        return view('users.edit',compact('user','roles'));
+        try {
+            $user = User::find($id);
+            $roles = Role::get();
+            $user_role = array_merge(...array_values(array_unique(array_column($user->roles->toArray(), 'pivot'))));
+            $user['role_id'] = $user_role['role_id'];
+            return view('users.edit',compact('user','roles'));
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
@@ -97,17 +115,14 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $input = $request->all();
+        \DB::beginTransaction();
         try {
-            $user = User::find($id);
-            $role = $input['role'];
-            unset($input['role']);
-            $user->fill($input)->save();
-            DB::table('roles_users')->where('user_id',$id)->update([
-                'role_id' => $role
-            ]);
-            return redirect()->route('users.index')->with('message','User updated successfully');
+            if($this->service->update($request, $id) == true){
+                \DB::commit();
+                return redirect()->route('users.index')->with('flash_message','User updated successfully');
+            }
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
@@ -120,10 +135,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        \DB::beginTransaction();
         try {
             User::find($id)->delete();
+            \DB::commit();
             return redirect()->route('users.index')->with('message','Deleted successfully');
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }

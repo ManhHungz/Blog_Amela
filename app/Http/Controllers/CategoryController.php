@@ -8,63 +8,86 @@ use App\Models\Category;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Services\CMS\CategoryService;
 
 class CategoryController extends Controller
 {
+    public function __construct(CategoryService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index(){
-        $datas = Category::orderBy('id','DESC')->paginate(5);
-        return view('categories.index',compact('datas'));
+        try {
+            $datas = Category::orderBy('id','DESC')->paginate(5);
+            return view('categories.index',compact('datas'));
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function create(){
-        return view('categories.create');
+        try {
+            return view('categories.create');
+        } catch (\Exception $e){
+        throw new \Exception($e->getMessage());
+        }
     }
 
     public function store(CreateCategoryRequest $request){
-        $input = $request->all();
+        \DB::beginTransaction();
         try {
-            $file = $request->file('category_image');
-            $fileName = $file->getClientOriginalName();
-            $storedPath = $file->storeAs('images/categories',$fileName);
-            $input['category_image'] = $storedPath;
-            Category::create($input);
-            return redirect()->route('categories.index');
+            $status = $this->service->store($request);
+            if ($status == true){
+                \DB::commit();
+                return redirect()->route('categories.index')->with('flash_message','Created category successfully');
+            }
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
 
     public function view($id){
-        $category = Category::find($id);
-        return view('categories.view',compact('category'));
+        try {
+            $category = Category::find($id);
+            return view('categories.view',compact('category'));
+        } catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function edit($id){
-        $category = Category::find($id);
-        return view('categories.edit',compact('category'));
+        try {
+            $category = Category::find($id);
+            return view('categories.edit',compact('category'));
+        } catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function update(UpdateCategoryRequest $request, $id){
-        $input = $request->all();
+        \DB::beginTransaction();
         try {
-            if(!empty($input['category_image'])){
-                $file = $request->file('category_image');
-                $fileName = $file->getClientOriginalName();
-                $storedPath = $file->storeAs('images/categories',$fileName);
-                $input['category_image'] = $storedPath;
+            $status = $this->service->update($request);
+            if ($status == true){
+                \DB::commit();
+                return redirect()->route('categories.index')->with('flash_message','Updated category successfully');
             }
-            Category::find($id)->fill($input)->save();
-            return redirect()->route('categories.index');
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
 
     public function destroy($id){
+        \DB::beginTransaction();
         try {
             Category::destroy($id);
+            \DB::commit();
             return redirect()->route('categories.index');
         }catch (\Exception $e){
+            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
