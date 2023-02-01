@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $datas = Product::with('images')->get()->paginate(Paginations::SHOW_ITEMS);
+            $datas = Product::with('images')->paginate(Paginations::SHOW_ITEMS);
             return response()->json([
                 'status' => 'success',
                 'data' => $datas,
