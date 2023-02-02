@@ -37,5 +37,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('my_account')->group(function () {
         Route::put('/update/{id}', [\App\Http\Controllers\Api\UserController::class, 'update']);
+        Route::get('/view/{id}', [\App\Http\Controllers\Api\UserController::class, 'view']);
     });
 });
