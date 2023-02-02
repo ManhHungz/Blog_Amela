@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('profile', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->string('name', 255)->nullable();
-            $table->integer('age')->nullable();
-            $table->integer('gender');
+            $table->string('user_id')->nullable();
+            $table->string('name',255)->nullable();
+            $table->date('dob')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->integer('gender')->nullable();
             $table->integer('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->text('address');
-            $table->text('user_image');
+            $table->string('address');
+            $table->string('image');
+            $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
