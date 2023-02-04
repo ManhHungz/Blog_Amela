@@ -24,12 +24,19 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
     Route::post('/refresh', [\App\Http\Controllers\Api\AuthController::class, 'refresh']);
 
-    Route::prefix('customer')->group(function () {
-        Route::get('/categories', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
-        Route::get('/categories/{id}', [\App\Http\Controllers\Api\CategoryController::class, 'detailCategory']);
+    Route::prefix('categories')->group(function () {
+        Route::get('/index', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
+        Route::get('/view/{id}', [\App\Http\Controllers\Api\CategoryController::class, 'detailCategory']);
+    });
 
-        Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
-        Route::get('/products/{id}', [\App\Http\Controllers\Api\ProductController::class, 'detailProduct']);
-        Route::get('/products-search/{name}', [\App\Http\Controllers\Api\ProductController::class, 'search']);
+    Route::prefix('products')->group(function () {
+        Route::get('/index', [\App\Http\Controllers\Api\ProductController::class, 'index']);
+        Route::get('/view/{id}', [\App\Http\Controllers\Api\ProductController::class, 'detailProduct']);
+        Route::get('/search', [\App\Http\Controllers\Api\ProductController::class, 'search']);
+    });
+
+    Route::prefix('my_account')->group(function () {
+        Route::patch('/update', [\App\Http\Controllers\Api\UserController::class, 'update']);
+        Route::get('/view', [\App\Http\Controllers\Api\UserController::class, 'view']);
     });
 });
