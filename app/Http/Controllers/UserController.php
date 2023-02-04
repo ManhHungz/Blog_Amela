@@ -65,7 +65,7 @@ class UserController extends Controller
         try {
             $this->service->store($request);
             \DB::commit();
-            return redirect()->route('categories.index')->with('flash_message','Create successfully');
+            return redirect()->route('users.index')->with('flash_message','Create successfully');
         }catch (\Exception $e){
             \DB::rollBack();
             throw new \Exception($e->getMessage());
