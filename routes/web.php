@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
     Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users-update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::patch('/users-update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::get('/users-delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
 
 // Manage roles
