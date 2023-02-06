@@ -25,7 +25,8 @@ class CategoryController extends Controller
 
     public function detailCategory($id){
         try {
-            $list_products = Pro::find($id)->products;
+            $list_products = Category::find($id)->products->pluck('id');
+            $list_products = Product::with('images')->whereIn('id',$list_products)->get();
             return response()->json([
                 'status' => 'success',
                 'data' => $list_products,
