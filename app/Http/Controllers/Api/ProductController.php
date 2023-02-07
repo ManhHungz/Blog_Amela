@@ -15,10 +15,15 @@ class ProductController extends Controller
         auth()->setDefaultDriver('api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $datas = Product::with('images')->paginate(Paginations::SHOW_ITEMS);
+            if(!empty($request->input('search'))){
+                $search = $request->input('search');
+                $datas = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::SHOW_ITEMS);
+            } else{
+                $datas = Product::with('images')->paginate(Paginations::SHOW_ITEMS);
+            }
             return response()->json([
                 'status' => 'success',
                 'data' => $datas,
@@ -35,20 +40,6 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $list_image,
-            ]);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function search(Request $request)
-    {
-        try {
-            $search = $request->input('search');
-            $product = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::SHOW_ITEMS);
-            return response()->json([
-                'status' => 'success',
-                'data' => $product
             ]);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
