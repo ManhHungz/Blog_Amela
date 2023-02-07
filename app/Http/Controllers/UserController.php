@@ -120,7 +120,7 @@ class UserController extends Controller
         try {
             $this->service->update($request, $id);
             \DB::commit();
-            return redirect('/users')->with('flash_message','User updated successfully');
+            return redirect()->route('users.index')->with('flash_message','User updated successfully');
         }catch (\Exception $e){
             \DB::rollBack();
             throw new \Exception($e->getMessage());

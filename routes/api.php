@@ -25,13 +25,20 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/refresh', [\App\Http\Controllers\Api\AuthController::class, 'refresh']);
 });
 
+Route::prefix('my_account')->group(function () {
+        Route::patch('/update', [\App\Http\Controllers\Api\UserController::class, 'update']);
+        Route::get('/view', [\App\Http\Controllers\Api\UserController::class, 'view']);
+        Route::get('/cart/{id}', [\App\Http\Controllers\Api\UserController::class, 'cart_index']);
+    });
+    Route::post('/payment', [\App\Http\Controllers\Api\OrderController::class, 'payment']);
+});
+
 Route::prefix('categories')->group(function () {
-        Route::get('/index', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
-        Route::get('/detail/{id}', [\App\Http\Controllers\Api\CategoryController::class, 'detailCategory']);
+    Route::get('/index', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
+    Route::get('/detail/{id}', [\App\Http\Controllers\Api\CategoryController::class, 'detailCategory']);
 });
 
 Route::prefix('products')->group(function () {
-        Route::get('/index', [\App\Http\Controllers\Api\ProductController::class, 'index']);
-        Route::get('/detail/{id}', [\App\Http\Controllers\Api\ProductController::class, 'detailProduct']);
-        Route::get('/search/{name}', [\App\Http\Controllers\Api\ProductController::class, 'search']);
+    Route::get('/index', [\App\Http\Controllers\Api\ProductController::class, 'index']);
+    Route::get('/detail/{id}', [\App\Http\Controllers\Api\ProductController::class, 'detailProduct']);
 });

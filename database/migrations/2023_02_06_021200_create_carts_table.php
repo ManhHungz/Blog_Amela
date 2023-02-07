@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profile', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->string('name', 255)->nullable();
-            $table->integer('age')->nullable();
-            $table->integer('gender');
-            $table->integer('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->text('address');
-            $table->text('user_image');
+            $table->integer('user_id');
+            $table->bigInteger('total_amount')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profile');
+        Schema::dropIfExists('carts');
     }
 };
