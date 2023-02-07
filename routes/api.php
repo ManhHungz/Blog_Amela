@@ -23,13 +23,13 @@ Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'regi
 Route::middleware('auth:api')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
     Route::post('/refresh', [\App\Http\Controllers\Api\AuthController::class, 'refresh']);
+});
 
-    Route::prefix('my_account')->group(function () {
+Route::prefix('my_account')->group(function () {
         Route::patch('/update', [\App\Http\Controllers\Api\UserController::class, 'update']);
         Route::get('/view', [\App\Http\Controllers\Api\UserController::class, 'view']);
         Route::get('/cart/{id}', [\App\Http\Controllers\Api\UserController::class, 'cart_index']);
     });
-
     Route::post('/payment', [\App\Http\Controllers\Api\OrderController::class, 'payment']);
 });
 
