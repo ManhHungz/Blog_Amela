@@ -78,7 +78,7 @@
                     <div class="col-md-12 mb-2">
                         @foreach($product_images as $product_image)
                             <img id="preview-image-before-upload" src="{{ asset($product_image) }}"
-                                 alt="preview image" style="max-height: 250px;">
+                                 alt="preview image" style="max-height: 150px;">
                         @endforeach
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">

@@ -15,9 +15,9 @@ class UserController
         auth()->setDefaultDriver('api');
     }
 
-    public function view(){
+    public function view(Request $request){
         try {
-            $user_id = Auth()->user()->id;
+            $user_id = $request->id;
             $user = User::with('profile')->find($user_id);
             return response()->json([
                 'status' => 200,
@@ -31,7 +31,7 @@ class UserController
     public function update(Request $request){
         \DB::beginTransaction();
         try {
-            $user_id = Auth()->user()->id;
+            $user_id = $request->id;
             $user = User::find($user_id);
             $request->validate([
                 'dob' => 'required|string',
@@ -69,5 +69,9 @@ class UserController
             \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function cart_index($id){
+
     }
 }

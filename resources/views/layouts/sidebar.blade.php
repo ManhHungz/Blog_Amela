@@ -78,6 +78,14 @@
                         </p>
                     </a>
                 </li>
+                    <li class="nav-item">
+                        <a href="{{route('orders.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Orders
+                            </p>
+                        </a>
+                    </li>
                 @if(0)
                 <li class="nav-item">
                     <a href="#" class="nav-link">
