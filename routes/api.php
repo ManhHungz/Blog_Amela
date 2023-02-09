@@ -27,10 +27,18 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('my_account')->group(function () {
         Route::patch('/update', [\App\Http\Controllers\Api\UserController::class, 'update']);
         Route::get('/view', [\App\Http\Controllers\Api\UserController::class, 'view']);
-        Route::get('/cart/{id}', [\App\Http\Controllers\Api\UserController::class, 'cart_index']);
+        Route::get('/orders', [\App\Http\Controllers\Api\UserController::class, 'get_orders']);
+        Route::get('/orders/{id}', [\App\Http\Controllers\Api\UserController::class, 'order_detail']);
     });
 
-    Route::post('/payment', [\App\Http\Controllers\Api\OrderController::class, 'payment']);
+    Route::prefix('orders')->group(function () {
+        Route::post('/payment', [\App\Http\Controllers\Api\OrderController::class, 'payment']);
+    });
+    Route::prefix('user_shipping')->group(function () {
+        Route::get('/get_address', [\App\Http\Controllers\Api\ShippingController::class, 'user_address']);
+        Route::post('/create', [\App\Http\Controllers\Api\ShippingController::class, 'create_address']);
+        Route::patch('/select/{id}', [\App\Http\Controllers\Api\ShippingController::class, 'select_shipping']);
+    });
 });
 
 Route::prefix('categories')->group(function () {

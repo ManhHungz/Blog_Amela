@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAdminUserSeeder extends Seeder
 {
@@ -17,18 +17,25 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => 'Hardik Savani',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('123456')
-        ]);
+        try {
+            $user = User::create([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'dob' => '1999-02-01',
+                'gender' => 1,
+                'phone' => '0987654320',
+                'address' => 'admin',
+                'image' => '',
+                'password' => Hash::make('1234567890')
+            ]);
 
-        $role = Role::create(['name' => 'Admin']);
+            $role = Role::firstOrCreate(['name' => 'Admin']);
 
-        $permissions = Permission::pluck('id','id')->all();
-
-        $role->syncPermissions($permissions);
-
-        $user->assignRole([$role->id]);
+            DB::table('roles_users')
+                ->insert(['user_id' => $user->id, 'role_id' => $role->id]);
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
     }
 }

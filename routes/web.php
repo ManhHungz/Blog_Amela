@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
         Route::get('/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
         Route::patch('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-        Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+        Route::delete('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     });
 
 // Manage roles
@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::post('/store', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
         Route::get('/{id}/edit', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
         Route::put('/update/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
-        Route::get('/delete/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
+        Route::delete('/delete/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
     });
 
 // Manage categories
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::get('/{id}/view', [App\Http\Controllers\CategoryController::class, 'view'])->name('categories.view');
         Route::get('/{id}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
         Route::put('/update/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
-        Route::get('/delete/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
+        Route::delete('/delete/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
     });
 
 // Manage products
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::get('/{id}/view', [App\Http\Controllers\ProductController::class, 'view'])->name('products.view');
         Route::get('/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
         Route::put('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
-        Route::get('/delete/{id}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+        Route::delete('/delete/{id}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
     });
 
 // Manage orders

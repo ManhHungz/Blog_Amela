@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('categories_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('category_id')->nullable();
-            $table->unsignedInteger('product_id')->nullable();
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('product_id');
             $table->timestamps();
         });
     }

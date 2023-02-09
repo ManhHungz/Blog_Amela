@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->bigInteger('total_amount')->nullable();
-            $table->integer('status')->nullable();
+            $table->double('total_amount');
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });
+
+
+
     }
 
     /**

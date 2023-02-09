@@ -30,7 +30,11 @@
                                             <td>{{ $row -> name }}</td>
                                             <td>
                                                 <a class="btn btn-primary" href="/roles/{{$row->id}}/edit">Edit</a>
-                                                <a class="btn btn-danger" href="/roles-delete/{{$row->id}}" onclick="return confirm('You Sure Want Delete?')">Delete</a>
+                                                <form method="post" action="/roles/delete/{{$row->id}}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger" type="submit" onclick="return confirm('You Sure Want Delete?')">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

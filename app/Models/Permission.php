@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name','price','guard_name'
+        'name', 'price', 'guard_name'
     ];
+
     /**
      * The roles that are belong to the permission
      *

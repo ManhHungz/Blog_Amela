@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Constants;
-
 
 class Paginations
 {
-    const SHOW_ITEMS = 5;
+    const SHOW_ITEMS = 20;
 }

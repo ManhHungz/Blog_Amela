@@ -18,12 +18,12 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th style="width: 15%">User name</th>
-                                        <th style="width: 15%">User email</th>
-                                        <th style="width: 10%">Amount</th>
-                                        <th style="width: 20%">Order date</th>
-                                        <th style="width: 10%">Status</th>
-                                        <th style="width: 30%">Action</th>
+                                        <th style="width: 15%">{{ 'User order' }}</th>
+                                        <th style="width: 15%">{{ 'User email' }}</th>
+                                        <th style="width: 10%">{{ 'Amount' }}</th>
+                                        <th style="width: 20%">{{ 'Order date' }}</th>
+                                        <th style="width: 10%">{{ 'Status' }}</th>
+                                        <th style="width: 30%">{{ 'Action' }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -34,19 +34,28 @@
                                             <td>{{ $row -> email }}</td>
                                             <td>{{ $row -> total_amount }}</td>
                                             <td>{{ $row -> created_at }}</td>
-                                            <td>{{ $row -> status }}</td>
+
+                                            @if($row -> status == -1)
+                                                <td>{{ $row -> status_title }}</td>
+                                            @else
+                                                <td>{{ $row -> status_title }}</td>
+                                            @endif
                                             <td>
                                                 <a class="btn btn-primary" href="/orders/view/{{ $row->id }}">View</a>
-                                                <form class="btn btn-success" action=""
-                                                      href="/orders/complete/{{ $row->id }}">Complete
-                                                </form>
-
-                                                {!! Form::model($fund, ['method' => 'PATCH', 'route' => ['funds.changeStatus', $fund->id]]); !!}
-                                                <button type="submit"
-                                                        class="btn btn-info">{{ $fund->status == false ? 'Marked Pending' : 'Marked complete' }}</button>
-                                                {!! Form::close() !!}
-                                                <a class="btn btn-danger"
-                                                   href="/orders/refuse/{{ $row->id }}">Refuse</a>
+                                            @if($row -> status == 1 || $row -> status == 0)
+                                                <form method="post" action="/orders/complete/{{ $row->id }}">
+                                                @csrf
+                                                @method('put')
+                                                <button class="btn btn-success" type="submit">Complete</button>
+                                            @endif
+                                            @if($row -> status == 0)
+                                                    </form>
+                                                    <form method="post" action="/orders/refuse/{{ $row->id }}">
+                                                        @csrf
+                                                        @method('put')
+                                                        <button class="btn btn-danger" type="submit">Refuse</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

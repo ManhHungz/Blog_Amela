@@ -21,8 +21,12 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'dob',
+        'gender',
+        'phone',
+        'address',
+        'image',
         'password',
-        'role'
     ];
 
     /**
@@ -78,11 +82,18 @@ class User extends Authenticatable implements JWTSubject
      *
      *
      */
-    public function profile(){
-        return $this->hasOne(Profile::class, 'user_id','id');
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
     }
 
-    public function carts(){
-        return $this->hasMany(Order::class, 'user_id','id');
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+    public function shippings()
+    {
+        return $this->hasMany(UserShipping::class, 'user_id', 'id');
     }
 }

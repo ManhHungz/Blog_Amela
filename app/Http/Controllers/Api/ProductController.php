@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
 use App\Constants\Paginations;
@@ -18,14 +17,14 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         try {
-            if(!empty($request->input('search'))){
+            if (!empty($request->input('search'))) {
                 $search = $request->input('search');
                 $datas = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::SHOW_ITEMS);
-            } else{
+            } else {
                 $datas = Product::with('images')->paginate(Paginations::SHOW_ITEMS);
             }
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'data' => $datas,
             ]);
         } catch (\Exception $e) {
@@ -38,7 +37,7 @@ class ProductController extends Controller
         try {
             $list_image = Product::with('images')->find($id);
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'data' => $list_image,
             ]);
         } catch (\Exception $e) {

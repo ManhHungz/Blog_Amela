@@ -27,7 +27,7 @@ class CategoryService
             $fileName = $file->getClientOriginalName();
             $storedPath = $file->storeAs('images/categories',$fileName);
             $input['category_image'] = $storedPath;
-            Category::find($id)->fill($input)->save();
         }
+        Category::find($id)->fill($input)->save();
     }
 }

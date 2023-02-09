@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -8,13 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 
-
 class AuthController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth:api', ['except' => ['login','register']]);
-        // We set the guard api as default driver
         auth()->setDefaultDriver('api');
     }
 
@@ -30,26 +28,27 @@ class AuthController extends Controller
             $token = Auth::attempt($credentials);
             if (!$token) {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 401,
                     'message' => 'Unauthorized',
-                ], 401);
+                ]);
             }
 
             $user = Auth::user();
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'user' => $user,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',
                 ]
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -68,7 +67,7 @@ class AuthController extends Controller
             ]);
             $token = Auth::login($user);
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'message' => 'User created successfully',
                 'user' => $user,
                 'authorisation' => [
@@ -76,7 +75,7 @@ class AuthController extends Controller
                     'type' => 'bearer',
                 ]
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -86,26 +85,26 @@ class AuthController extends Controller
         try {
             Auth::logout();
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'message' => 'Successfully logged out',
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
 
     public function refresh()
     {
-        try{
+        try {
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'user' => Auth::user(),
                 'authorisation' => [
                     'token' => Auth::refresh(),
                     'type' => 'bearer',
                 ]
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }

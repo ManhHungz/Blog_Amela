@@ -6,14 +6,10 @@ use App\Constants\Paginations;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Services\CMS\UserService;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
 use DB;
 use Hash;
-use Illuminate\Support\Arr;
-use Exception;
 use Session;
 
 class UserController extends Controller
@@ -31,9 +27,9 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $datas = User::orderBy('id','DESC')->paginate(Paginations::SHOW_ITEMS);
-            return view('users.index',compact('datas'));
-        }catch (\Exception $e){
+            $datas = User::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+            return view('users.index', compact('datas'));
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -47,8 +43,8 @@ class UserController extends Controller
     {
         try {
             $roles = Role::pluck('name')->all();
-            return view('users.create',compact('roles'));
-        }catch (\Exception $e){
+            return view('users.create', compact('roles'));
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -56,7 +52,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateUserRequest $request)
@@ -65,8 +61,8 @@ class UserController extends Controller
         try {
             $this->service->store($request);
             \DB::commit();
-            return redirect()->route('users.index')->with('flash_message','Create successfully');
-        }catch (\Exception $e){
+            return redirect()->route('users.index')->with('flash_message', 'Create successfully');
+        } catch (\Exception $e) {
             \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
@@ -75,15 +71,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         try {
             $user = User::find($id);
-            return view('users.show',compact('user'));
-        }catch (\Exception $e){
+            return view('users.show', compact('user'));
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -91,7 +87,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -101,8 +97,8 @@ class UserController extends Controller
             $roles = Role::get();
             $user_role = array_merge(...array_values(array_unique(array_column($user->roles->toArray(), 'pivot'))));
             $user['role_id'] = $user_role['role_id'];
-            return view('users.edit',compact('user','roles'));
-        }catch (\Exception $e){
+            return view('users.edit', compact('user', 'roles'));
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -110,8 +106,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, $id)
@@ -120,8 +116,8 @@ class UserController extends Controller
         try {
             $this->service->update($request, $id);
             \DB::commit();
-            return redirect()->route('users.index')->with('flash_message','User updated successfully');
-        }catch (\Exception $e){
+            return redirect()->route('users.index')->with('flash_message', 'User updated successfully');
+        } catch (\Exception $e) {
             \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
@@ -130,7 +126,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -139,8 +135,8 @@ class UserController extends Controller
         try {
             User::find($id)->delete();
             \DB::commit();
-            return redirect()->route('users.index')->with('message','Deleted successfully');
-        }catch (\Exception $e){
+            return redirect()->route('users.index')->with('flash_message', 'Deleted successfully');
+        } catch (\Exception $e) {
             \DB::rollBack();
             throw new \Exception($e->getMessage());
         }

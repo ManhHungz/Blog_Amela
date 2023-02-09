@@ -20,7 +20,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <label for="name">Name</label>
                         <div class="form-group">
-                            <input id="name" type="text" class="form-control" name="name" placeholder="Enter your name" >
+                            <input id="name" type="text" class="form-control" name="name" placeholder="Enter role name" >
                             @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -30,7 +30,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
-
             </form>
         </section>
     </div>

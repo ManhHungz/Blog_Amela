@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_images', function (Blueprint $table) {
-            Schema::dropIfExists('product_images');
-            $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->text('product_image');
-
-            $table->foreign('product_id')->references('id')->on('products');
+        Schema::table('cart_details', function (Blueprint $table) {
+            $table->integer('order_id');
         });
+
+        Schema::rename('cart_details', 'order_details');
     }
 
     /**
@@ -30,6 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_images');
+        Schema::table('cart_details', function (Blueprint $table) {
+            $table->dropColumn('order_id');
+        });
+
+        Schema::rename('order_details', 'cart_details');
     }
 };

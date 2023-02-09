@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Product extends Model
 {
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +18,7 @@ class Product extends Model
     protected $fillable = [
         'name','price','shortDescription','description','user_id','quantity'
     ];
+
     /**
      * The products that are belong to the category
      *
@@ -36,5 +38,4 @@ class Product extends Model
     public function cart_details(){
         return $this->hasMany(OrderDetail::class, 'product_id','id');
     }
-
 }

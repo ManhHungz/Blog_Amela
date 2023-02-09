@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class CreateShippingAdress extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'max:255',
-            'dob' => 'required|date_format:Y-m-d|before:today',
-            'gender' => 'required',
-            'phone' => 'required|regex:/(0)[0-9]{9}/',
-            'address' => 'regex:/([- ,\/0-9a-zA-Z]+)/',
-            'image' => 'max:2048',
+            'name' => 'required|max:255',
+            'phone' => 'required|numeric|digits:10',
+            'address' => 'required|regex:/(^[-0-9A-Za-z.,\/ ]+$)/',
         ];
         return $rules;
     }

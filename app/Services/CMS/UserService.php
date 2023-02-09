@@ -12,6 +12,11 @@ class UserService
     public function store($request){
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+        $input['dob'] = '1999-01-01';
+        $input['gender'] = \App\Constants\User::MALE;
+        $input['phone'] = 987654320;
+        $input['address'] = '';
+        $input['image'] = '';
         $role = $input['role'];
         unset($input['role']);
         $insert = User::create($input);

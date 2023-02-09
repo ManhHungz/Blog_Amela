@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->nullable();
-            $table->string('code', 255)->nullable();
+            $table->string('name', 255);
+            $table->string('code');
             $table->text('description');
-            $table->text('category_image')->nullable();
-            $table->string('brand', 255)->nullable();
+            $table->text('category_image');
+            $table->string('brand');
             $table->timestamps();
             $table->softDeletes();
         });
+
+
     }
 
     /**

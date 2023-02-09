@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         \DB::beginTransaction();
         try {
-            $this->service->update($request);
+            $this->service->update($request, $id);
             \DB::commit();
             return redirect()->route('categories.index')->with('flash_message', 'Updated category successfully');
         } catch (\Exception $e) {

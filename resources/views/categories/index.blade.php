@@ -35,7 +35,11 @@
                                             <td>
                                                 <a class="btn btn-primary" href="/categories/{{$row->id}}/view">View</a>
                                                 <a class="btn btn-primary" href="/categories/{{$row->id}}/edit">Edit</a>
-                                                <a class="btn btn-danger" href="/categories-delete/{{$row->id}}" onclick="return confirm('You Sure Want Delete?')">Delete</a>
+                                                <form method="post" action="/categories/delete/{{$row->id}}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger" type="submit" onclick="return confirm('You Sure Want Delete?')">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

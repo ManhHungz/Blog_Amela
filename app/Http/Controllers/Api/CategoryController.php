@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -12,27 +12,30 @@ class CategoryController extends Controller
     {
         auth()->setDefaultDriver('api');
     }
-    public function index(){
+
+    public function index()
+    {
         try {
             $datas = Category::all();
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'data' => $datas,
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
 
-    public function detailCategory($id){
+    public function detailCategory($id)
+    {
         try {
             $list_products = Category::find($id)->products->pluck('id');
-            $list_products = Product::with('images')->whereIn('id',$list_products)->get();
+            $list_products = Product::with('images')->whereIn('id', $list_products)->get();
             return response()->json([
-                'status' => 'success',
+                'status' => 200,
                 'data' => $list_products,
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }

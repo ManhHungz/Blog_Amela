@@ -15,7 +15,10 @@
                                 <a class="btn btn-primary" href="{{ route('orders.index') }}"> Back</a>
                             </div>
                             <!-- /.card-header -->
+
+                            <!-- Order detail -->
                             <div class="card-body">
+                                <h5 class="card-header">Order Details</h5>
                                 <table id="myTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -39,6 +42,26 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!-- User shipping -->
+                            <div class="card-body">
+                                <h5 class="card-header">Receiver</h5>
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 15%">{{ 'Name' }}</th>
+                                        <th style="width: 15%">{{ 'Phone' }}</th>
+                                        <th style="width: 10%">{{ 'Address' }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td>{{ $shipping -> name }}</td>
+                                        <td>{{ $shipping -> phone }}</td>
+                                        <td>{{ $shipping -> address }}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
