@@ -106,7 +106,6 @@
     $(function () {
         $("#myTable").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,"paging":false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#myTable_wrapper .col-md-6:eq(0)');
     });
 </script>
@@ -118,5 +117,17 @@
 {{--        });--}}
 {{--    } );--}}
 {{--</script>--}}
+
+<script src="plugins/jquery/jquery.min.js"></script>
+
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="dist/js/adminlte.js?v=3.2.0"></script>
+
+<script src="plugins/chart.js/Chart.min.js"></script>
+
+<script src="dist/js/demo.js"></script>
+
+<script src="dist/js/pages/dashboard3.js"></script>
 </body>
 </html>

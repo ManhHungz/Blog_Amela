@@ -14,15 +14,10 @@ class ProductController extends Controller
         auth()->setDefaultDriver('api');
     }
 
-    public function index(Request $request)
+    public function index()
     {
         try {
-            if (!empty($request->input('search'))) {
-                $search = $request->input('search');
-                $datas = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::CUS_SHOW_ITEMS);
-            } else {
-                $datas = Product::with('images')->paginate(Paginations::CUS_SHOW_ITEMS);
-            }
+            $datas = Product::with(['categories', 'images'])->filter()->paginate(Paginations::CUS_SHOW_ITEMS);
             return response()->json([
                 'status' => 200,
                 'data' => $datas,
