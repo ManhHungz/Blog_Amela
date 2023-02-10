@@ -17,25 +17,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        try {
-            $user = User::create([
-                'name' => 'admin',
-                'email' => 'admin@gmail.com',
-                'dob' => '1999-02-01',
-                'gender' => 1,
-                'phone' => '0987654320',
-                'address' => 'admin',
-                'image' => '',
-                'password' => Hash::make('1234567890')
-            ]);
+//         try {
+//             $user = User::create([
+//                 'name' => 'admin',
+//                 'email' => 'admin@gmail.com',
+//                 'dob' => '1999-02-01',
+//                 'gender' => 1,
+//                 'phone' => '0987654320',
+//                 'address' => 'admin',
+//                 'image' => '',
+//                 'password' => Hash::make('1234567890')
+//             ]);
 
-            $role = Role::firstOrCreate(['name' => 'Admin']);
+//             $role = Role::firstOrCreate(['name' => 'Admin']);
 
-            DB::table('roles_users')
-                ->insert(['user_id' => $user->id, 'role_id' => $role->id]);
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            throw new \Exception($e->getMessage());
-        }
+//             DB::table('roles_users')
+//                 ->insert(['user_id' => $user->id, 'role_id' => $role->id]);
+//         } catch (\Exception $e) {
+//             \DB::rollBack();
+//             throw new \Exception($e->getMessage());
+//         }
     }
 }
