@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $datas = User::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+            $datas = User::orderBy('id', 'DESC')->paginate(Paginations::ADMIN_SHOW_ITEMS);
             return view('users.index', compact('datas'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

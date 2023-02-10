@@ -4,5 +4,6 @@ namespace App\Constants;
 
 class Paginations
 {
-    const SHOW_ITEMS = 20;
+    const ADMIN_SHOW_ITEMS = 5;
+    const CUS_SHOW_ITEMS = 20;
 }
