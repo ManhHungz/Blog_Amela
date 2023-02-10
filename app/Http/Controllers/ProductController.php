@@ -5,13 +5,9 @@ namespace App\Http\Controllers;
 use App\Constants\Paginations;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\CategoriesProducts;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImages;
 use App\Services\CMS\ProductService;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -23,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $datas = Product::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+            $datas = Product::orderBy('id', 'DESC')->paginate(Paginations::ADMIN_SHOW_ITEMS);
             return view('products.index', compact('datas'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

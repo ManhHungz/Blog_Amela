@@ -19,9 +19,9 @@ class ProductController extends Controller
         try {
             if (!empty($request->input('search'))) {
                 $search = $request->input('search');
-                $datas = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::SHOW_ITEMS);
+                $datas = Product::with('images')->where('name', 'LIKE', "%{$search}%")->paginate(Paginations::CUS_SHOW_ITEMS);
             } else {
-                $datas = Product::with('images')->paginate(Paginations::SHOW_ITEMS);
+                $datas = Product::with('images')->paginate(Paginations::CUS_SHOW_ITEMS);
             }
             return response()->json([
                 'status' => 200,

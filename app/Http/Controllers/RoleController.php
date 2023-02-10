@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Constants\Paginations;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -32,7 +31,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = Role::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+        $datas = Role::orderBy('id', 'DESC')->paginate(Paginations::ADMIN_SHOW_ITEMS);
         return view('roles.index', compact('datas'));
     }
 

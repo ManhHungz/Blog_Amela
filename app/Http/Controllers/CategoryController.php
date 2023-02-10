@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $datas = Category::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+            $datas = Category::orderBy('id', 'DESC')->paginate(Paginations::ADMIN_SHOW_ITEMS);
             return view('categories.index', compact('datas'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

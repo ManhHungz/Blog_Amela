@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         try {
-            $datas = Order::orderBy('id', 'DESC')->paginate(Paginations::SHOW_ITEMS);
+            $datas = Order::orderBy('id', 'DESC')->paginate(Paginations::ADMIN_SHOW_ITEMS);
             $user_ids = $datas->pluck('user_id');
             $users = User::whereIn('id', $user_ids)->get()->toArray();
             foreach ($datas as $data) {
