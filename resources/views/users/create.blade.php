@@ -58,8 +58,8 @@
                         <div class="form-group">
                             <select name="role" id="role" class="form-control" >
                                 <option value="">Choose role</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Customer</option>
+                                <option value="{{ \App\Constants\User::ROLE_ADMIN }}">{{ __('Admin') }}</option>
+                                <option value="{{ \App\Constants\User::ROLE_CUSTOMER }}">{{ __('Customer') }}</option>
                             </select>
                             @error('role')
                             <div class="alert alert-danger">{{ $message }}</div>
