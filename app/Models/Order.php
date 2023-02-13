@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = ['user_id', 'total_amount', 'status'];
 
-    public function sub_order()
+    public function subOrder()
     {
         return $this->hasMany(OrderDetail::class, 'order_id', 'id');
     }

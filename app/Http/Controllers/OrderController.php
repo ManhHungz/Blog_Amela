@@ -49,8 +49,7 @@ class OrderController extends Controller
             $shipping = DB::table('user_shippings')
                 ->select('name', 'phone', 'address')
                 ->where([
-                'user_id' => $order->user_id,
-                'status' => Shipping::STATUS_SHIPPING_CHECKED])
+                'order_id' => $order->id])
                 ->first();
             $sub_orders = $order->sub_order;
             $product_ids = $sub_orders->pluck('product_id');

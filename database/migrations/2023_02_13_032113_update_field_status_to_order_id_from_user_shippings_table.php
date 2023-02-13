@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,13 +13,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->double('total_amount');
-            $table->integer('status');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('user_shippings', function (Blueprint $table) {
+            $table->renameColumn('status', 'order_id');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::table('user_shippings', function (Blueprint $table) {
+            $table->renameColumn('order_id', 'status');
+        });
     }
 };

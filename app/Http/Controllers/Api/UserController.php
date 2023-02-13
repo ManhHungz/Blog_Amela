@@ -59,40 +59,17 @@ class UserController
         }
     }
 
-    public function get_orders()
+    public function getOrder()
     {
         try {
-            $orders = User::find(Auth::user()->id)->orders()->get();
+            $order_detail_ids = User::find(Auth::user()->id)->orderDetail()->pluck('product_id')->toArray();
+            $order_detail_ids = array_values(array_unique($order_detail_ids));
+            $products = Product::with('orderProducts')->whereIn('id', $order_detail_ids)->get()->toArray();
             return response()->json([
                 'status' => 200,
-                'data' => $orders
+                'data' => $products
             ]);
         } catch (\Exception $e) {
-            \DB::rollBack();
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function order_detail($id)
-    {
-        try {
-            $order = Order::with('sub_order')->find($id)->toArray();
-            $product_ids = array_values(array_column($order['sub_order'], 'product_id'));
-            $products = Product::whereIn('id', $product_ids)->get();
-            foreach ($order['sub_order'] as $key => $sub) {
-                foreach ($products as $product) {
-                    if ($sub['product_id'] == $product->id) {
-                        $order['sub_order'][$key]['product_name'] = $product->name;
-                        $order['sub_order'][$key]['product_price'] = $product->price;
-                    }
-                }
-            }
-            return response()->json([
-                'status' => 200,
-                'data' => $order
-            ]);
-        } catch (\Exception $e) {
-            \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
