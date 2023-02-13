@@ -50,13 +50,13 @@
                                     <thead>
                                     <tr>
                                         <th style="width: 15%">{{ 'Name' }}</th>
-                                        <th style="width: 15%">{{ 'Phone' }}</th>
-                                        <th style="width: 10%">{{ 'Address' }}</th>
+                                        <th style="width: 10%">{{ 'Phone' }}</th>
+                                        <th style="width: 75%">{{ 'Address' }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         <td>{{ $shipping -> name }}</td>
-                                        <td>{{ $shipping -> phone }}</td>
+                                        <td>{{ '0'.$shipping -> phone }}</td>
                                         <td>{{ $shipping -> address }}</td>
                                     </tbody>
                                 </table>

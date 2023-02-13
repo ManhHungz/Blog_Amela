@@ -7,7 +7,6 @@ use App\Http\Requests\Api\CreatePaymentRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
-use App\Models\User;
 use App\Models\UserShipping;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;

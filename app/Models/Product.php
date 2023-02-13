@@ -48,8 +48,10 @@ class Product extends Model
             $request->where('name', 'like', '%' . request('name') . '%');
         }
         if (request('price_from')) {
-            $request->where('price', '>=', request('price_from'))
-                ->where('price', '<=', request('price_to'))->orderBy('price', 'asc');
+            $request->where('price', '>=', request('price_from'))->orderBy('price', 'asc');
+        }
+        if (request('price_to')) {
+            $request->where('price', '<=', request('price_to'))->orderBy('price', 'asc');
         }
         if (request('time') == 'newest') {
             $request->orderBy('created_at', 'desc');

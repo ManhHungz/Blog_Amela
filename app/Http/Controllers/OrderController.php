@@ -51,7 +51,7 @@ class OrderController extends Controller
                 ->where([
                 'order_id' => $order->id])
                 ->first();
-            $sub_orders = $order->sub_order;
+            $sub_orders = $order->subOrder;
             $product_ids = $sub_orders->pluck('product_id');
             $products = Product::whereIn('id', $product_ids)->get()->toArray();
             foreach ($sub_orders as $sub_order) {
