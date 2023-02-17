@@ -49,12 +49,12 @@ class ProductService
                     'product_image' => $storedPath
                 ];
             }
+            ProductImages::insert($product_images);
         }
         $categories_id = $input['categories'];
         unset($input['categories']);
         unset($input['product_images']);
         $product->fill($input)->save();
-        ProductImages::insert($product_images);
         $product->categories()->sync($categories_id);
     }
 }
